@@ -9,9 +9,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.Animation;
+import android.widget.ArrayAdapter;
 import android.widget.GridView;
 
 import java.io.IOException;
+import java.util.ArrayList;
 
 /**
  * Created by Maxim on 2/24/2017.
@@ -19,6 +21,9 @@ import java.io.IOException;
 
 public class PhotoGalleryFragment extends Fragment {
     private GridView mGridView;
+
+    private ArrayList<GalleryItem> mItems;
+
     private View v;
 
     @Override
@@ -45,6 +50,18 @@ public class PhotoGalleryFragment extends Fragment {
         protected Void doInBackground(Void... params) {
             new FlickrFetchr().fetchItems();
             return null;
+        }
+    }
+
+    private void setupAdapter() {
+        if (getActivity() == null || mGridView == null)
+            return;
+
+        if (mItems != null) {
+            mGridView.setAdapter(new ArrayAdapter<GalleryItem>(getActivity(),
+                    android.R.layout.simple_gallery_item, mItems));
+        } else {
+            mGridView.setAdapter(null);
         }
     }
 }
