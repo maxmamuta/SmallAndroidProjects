@@ -24,6 +24,7 @@ import java.util.ArrayList;
 public class FlickrFetchr {
 
     public static final String PREF_SEARCH_QUERY = "searchQuery";
+    public static final String PREF_LAST_RESULT_ID = "lastResultId";
 
     private static final String ENDPOINT = "https://api.flickr.com/services/rest/";
     private static final String API_KEY = "e038b91e229bdfa5869c665515fb3bc3";
