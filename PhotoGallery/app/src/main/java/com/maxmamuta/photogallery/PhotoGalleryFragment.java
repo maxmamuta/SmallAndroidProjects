@@ -31,7 +31,7 @@ import java.util.ArrayList;
  * Created by Maxim on 2/24/2017.
  */
 
-public class PhotoGalleryFragment extends Fragment {
+public class PhotoGalleryFragment extends VisibleFragment {
     private GridView mGridView;
 
     private ArrayList<GalleryItem> mItems;

@@ -23,6 +23,8 @@ import java.util.ArrayList;
 public class PollService extends IntentService {
     private static final String TAG = "PollService";
     private static final int POLL_INTERVAL = 1000 * 60 * 5; //15 s
+    public static final String PREF_IS_ALARM_ON = "isAlarmOn";
+    public static final String ACTION_SHOW_NOTIFICATION = "com.maxmamuta.SHOW_NOTIFICATION";
 
     public PollService() {
         super(TAG);
@@ -71,6 +73,8 @@ public class PollService extends IntentService {
             NotificationManager notificationManager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
 
             notificationManager.notify(0, no);
+
+            sendBroadcast(new Intent(ACTION_SHOW_NOTIFICATION));
         } else {
             Log.i(TAG, "Got an old result: "+resultId);
         }
@@ -96,6 +100,11 @@ public class PollService extends IntentService {
             alarmManager.cancel(pi);
             pi.cancel();
         }
+
+        PreferenceManager.getDefaultSharedPreferences(context)
+                .edit()
+                .putBoolean(PollService.PREF_IS_ALARM_ON, isOn)
+                .commit();
     }
 
     public static boolean isServiseAlarmOn(Context context) {
