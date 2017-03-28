@@ -3,6 +3,7 @@ package com.maxmamuta.photogallery;
 import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
@@ -11,6 +12,8 @@ import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.widget.AdapterView;
+import android.widget.Button;
 import android.widget.Toolbar;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -83,6 +86,14 @@ public class PhotoGalleryFragment extends VisibleFragment {
 
         mGridView = (GridView) v.findViewById(R.id.gridView);
 
+        mGridView.setOnItemClickListener((parent, view, position, id) -> {
+            GalleryItem item = mItems.get(position);
+
+            Uri photoPageUri = Uri.parse(item.getPhotoPageUrl());
+            Intent i = new Intent(Intent.ACTION_VIEW, photoPageUri);
+
+            startActivity(i);
+        });
         setupAdapter();
 
         return v;
