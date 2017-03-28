@@ -1,5 +1,6 @@
 package com.maxmamuta.photogallery;
 
+import android.app.Activity;
 import android.app.AlarmManager;
 import android.app.IntentService;
 import android.app.Notification;
@@ -22,9 +23,11 @@ import java.util.ArrayList;
 
 public class PollService extends IntentService {
     private static final String TAG = "PollService";
-    private static final int POLL_INTERVAL = 1000 * 60 * 5; //15 s
+    private static final int POLL_INTERVAL = 5000;
     public static final String PREF_IS_ALARM_ON = "isAlarmOn";
     public static final String ACTION_SHOW_NOTIFICATION = "com.maxmamuta.SHOW_NOTIFICATION";
+
+    public static final String PERM_PRIVATE = "com.maxmamuta.photogallery.PRIVATE";
 
     public PollService() {
         super(TAG);
@@ -70,11 +73,7 @@ public class PollService extends IntentService {
                         .setAutoCancel(true)
                         .build();
 
-            NotificationManager notificationManager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
-
-            notificationManager.notify(0, no);
-
-            sendBroadcast(new Intent(ACTION_SHOW_NOTIFICATION));
+            showBackgroundNotification(0, no);
         } else {
             Log.i(TAG, "Got an old result: "+resultId);
         }
@@ -112,5 +111,15 @@ public class PollService extends IntentService {
         PendingIntent pi = PendingIntent.getService(
                 context, 0, i, PendingIntent.FLAG_NO_CREATE);
         return pi != null;
+    }
+
+    void showBackgroundNotification(int requestCode, Notification notification) {
+        Intent i = new Intent(ACTION_SHOW_NOTIFICATION);
+        i.putExtra("REQUEST_CODE", requestCode);
+        i.putExtra("NOTIFICATION", notification);
+
+        sendOrderedBroadcast(i, PERM_PRIVATE, null, null,
+                Activity.RESULT_OK, null, null);
+
     }
 }

@@ -1,5 +1,7 @@
 package com.maxmamuta.photogallery;
 
+import android.app.Activity;
+import android.app.Notification;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
@@ -18,11 +20,8 @@ public class VisibleFragment extends Fragment {
     private BroadcastReceiver mOnShowNotofocation = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
-            Log.d(TAG, "SSSSS");
-            Toast.makeText(getActivity(),
-                    "Got a broadcast:"+intent.getAction(),
-                    Toast.LENGTH_LONG)
-                    .show();
+            Log.i(TAG, "canceling notification");
+            setResultCode(Activity.RESULT_CANCELED);
         }
     };
 
@@ -30,7 +29,8 @@ public class VisibleFragment extends Fragment {
     public void onResume() {
         super.onResume();
         IntentFilter filter = new IntentFilter(PollService.ACTION_SHOW_NOTIFICATION);
-        getActivity().registerReceiver(mOnShowNotofocation, filter);
+        getActivity().registerReceiver(mOnShowNotofocation, filter,
+                PollService.PERM_PRIVATE, null);
     }
 
     @Override
