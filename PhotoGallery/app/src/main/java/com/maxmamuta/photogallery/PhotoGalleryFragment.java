@@ -41,7 +41,7 @@ public class PhotoGalleryFragment extends VisibleFragment {
 
     private View v;
 
-    private static final String TAG = "PhotoGalleryFRagment";
+    private static final String TAG = "PhotoGalleryFragment";
 
     ThumbnailDownloader<ImageView> mThumbnailThread;
 
@@ -77,9 +77,9 @@ public class PhotoGalleryFragment extends VisibleFragment {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         v = inflater.inflate(R.layout.fragment_photo_gallery, container, false);
 
-        Toolbar myToolbar = (Toolbar) v.findViewById(R.id.my_toolbar);
+  //      Toolbar myToolbar = (Toolbar) v.findViewById(R.id.my_toolbar);
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            getActivity().setActionBar(myToolbar);
+//            getActivity().setActionBar(myToolbar);
         }
         setRetainInstance(true);
         setHasOptionsMenu(true);
@@ -90,7 +90,10 @@ public class PhotoGalleryFragment extends VisibleFragment {
             GalleryItem item = mItems.get(position);
 
             Uri photoPageUri = Uri.parse(item.getPhotoPageUrl());
-            Intent i = new Intent(Intent.ACTION_VIEW, photoPageUri);
+//            Intent i = new Intent(Intent.ACTION_VIEW, photoPageUri);
+            Intent i = new Intent(getActivity().getApplicationContext(),
+                    PhotoPageActivity.class);
+            i.setData(photoPageUri);
 
             startActivity(i);
         });
