@@ -1,0 +1,17 @@
+mvp:
+https://habrahabr.ru/post/131446/
+
+rxjava:
+https://habrahabr.ru/post/265269/
+
+retrofit:
+http://www.vogella.com/tutorials/Retrofit/article.html
+
+dagger:
+
+need to simplify lambda:
+https://github.com/evant/gradle-retrolambda
+
+simple examples:
+https://medium.com/@nurrohman/a-simple-android-apps-with-mvp-dagger-rxjava-and-retrofit-4edb214a66d7
+https://habrahabr.ru/company/rambler-co/blog/275943/
